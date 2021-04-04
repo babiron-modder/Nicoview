@@ -39,7 +39,16 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    proxy: true
+  },
+
+  proxy: {
+    '/api/': {
+      target: 'http://api.ce.nicovideo.jp',
+      pathRewrite: {'^/api/': ''},
+    }
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
