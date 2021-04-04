@@ -3,7 +3,7 @@
     <div>
       <Logo />
       <h1 class="title">
-        nicoview
+        nicoview v.0.1.0
       </h1>
       <div class="links">
         <a
