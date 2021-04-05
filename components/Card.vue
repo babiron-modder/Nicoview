@@ -17,7 +17,7 @@
       </div>
       <!-- タイトル -->
       <div class="px-3 py-1 my-auto h-100 align-middle flex-fill" style="width:0px;word-wrap:break-word;">
-        <p style="margin:0px"><a v-html="item.title._text.split('：')[1]" :href="item.link._text.split('.jp')[1]"></a> &#091;<a :href="item.link._text.replace('www','embed')">embed</a>&#093; &#091;<a :href="item.link._text">nicnico</a>&#093;</p>
+        <p style="margin:0px"><a v-html="item.title._text.split('：')[1]" :href="item.link._text.split('.jp')[1].split('?')[0]"></a> &#091;<a :href="item.link._text.replace('www','embed')">embed</a>&#093; &#091;<a :href="item.link._text">nicnico</a>&#093;</p>
         <!--p style="word-wrap:break-word;">{{item.description._cdata}}</p-->
       </div>
     </div>
