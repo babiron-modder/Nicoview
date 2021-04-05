@@ -3,6 +3,7 @@
     <AppHeader/>
     <section class="container">
       <h1>Nicoview</h1>
+      <div class="text-mute">動画が見れない場合はCookieをONにしてみてください</div>
       <p>総合 / 毎時 / カテゴリ合算 / <a href="./ranking/fav/hour/all">ランキング</a></p>
       <div v-for="item in result.rss.channel.item" class="">
         <Card :item="item"></Card>
