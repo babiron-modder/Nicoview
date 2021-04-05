@@ -86,11 +86,12 @@ export default {
       .replace(/\s*パート\.*\s*[\d１２３４５６７８９０]+\s*\/*[\d１２３４５６７８９０]*.*/gi," ")
       .replace(/\s*\(\s*[\d１２３４５６７８９０]+\s*\/*[\d１２３４５６７８９０]*\)/gi," ")
       .replace(/\s*【\s*[\d１２３４５６７８９０一二三四五六七八九十零]+\s*】/gi," ")
-      .replace(/\s*第[\d１２３４５６７８９０一二三四五六七八九十零]+話.*/gi," 第 話 ")
+      .replace(/\s*[\d１２３４５６７８９０一二三四五六七八九十零]+話.*/gi,"  話 ")
       .replace(/\s*第[\d１２３４５６７８９０一二三四五六七八九十零]+回/gi," 第 回 ")
       .replace(/\s*第[\d１２３４５６７８９０一二三四五六七八九十零]+戦/gi," 第 戦 ")
       .replace(/\s*[\d１２３４５６７８９０一二三四五六七八九十零]+日目/gi," 日目 ")
       .replace(/\s*その[\d１２３４５６７８９０一二三四五六七八九十零]+/gi," その ")
+      .replace(/\s*[前中後]編\s*/gi," ")
       .replace(/\s*chapter[\d１２３４５６７８９０]+\s*/gi," chapter ")
       .replace(/\s+[\d１２３４５６７８９０]+\s+/gi," ")
 
@@ -143,23 +144,6 @@ export default {
 </script>
 
 <style>
-/* html {
-  scroll-behavior: smooth;
-  height: 2148px;
-} */
-
-/* body {
-  scroll-behavior: smooth;
-  height: 10000px;
-} */
-
-/* #__nuxt {
-  scroll-behavior: smooth;
-}*/
-
-/* #__layout {
-  scroll-behavior: smooth;
-} */
 
 #card_list_area{
   scroll-behavior: smooth;
