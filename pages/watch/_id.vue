@@ -92,7 +92,7 @@ export default {
       .replace(/\s*[\d１２３４５６７８９０一二三四五六七八九十零]+日目/gi," 日目 ")
       .replace(/\s*その[\d１２３４５６７８９０一二三四五六七八九十零]+/gi," その ")
       .replace(/\s*[前中後]編\s*/gi," ")
-      .replace(/\s*最終話\s*/gi," ")
+      .replace(/\s*最終[話回]\s*/gi," ")
       .replace(/\s+\-*\s*/gi," ")
       .replace(/\s*chapter[\d１２３４５６７８９０]+\s*/gi," chapter ")
       .replace(/\s+[\d１２３４５６７８９０]+\s+/gi," ")
