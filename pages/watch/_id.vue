@@ -1,7 +1,10 @@
 <template>
   <div class="">
     <div class="">
-      <iframe :src="'https://embed.nicovideo.jp/watch/'+this.url" width="" height="" class="" style="height:100%;width:100%;position:absolute;border:none;" v-if="true"></iframe>
+      <iframe :src="'https://embed.nicovideo.jp/watch/'+this.url" width="" height="" class="" style="height:100%;width:100%;position:absolute;border:none;" v-if="true" ref="mov_area"></iframe>
+      <button class="btn p-0 fullscreen" @click="fullscreen">
+        <i class="material-icons m-1">open_in_full</i>
+      </button>
     </div>
     <div class="container" style="padding-top:105vh;min-height:200vh">
       <h3 v-html='result.nicovideo_video_response.video.title._text'></h3>
@@ -70,6 +73,13 @@ export default {
   validate({params}) {
     return /^(s[mo]|\d\d)\d+$/.test(params.id);
   },
+  methods: {
+    fullscreen(){
+      let requestFullScreen = this.$refs.mov_area.requestFullscreen || this.$refs.mov_area.mozRequestFullScreen || this.$refs.mov_area.webkitRequestFullScreen || this.$refs.mov_area.msRequestFullscreen;
+      requestFullScreen.call(this.$refs.mov_area);
+      // console.log(this.$refs.mov_area);
+    }
+  },
   async asyncData ({ params }) {
     let id = encodeURI(params.id);
 
@@ -130,7 +140,13 @@ export default {
   },
   head(){
     return {
-      title: `${this.result.nicovideo_video_response.video.title._text}`
+      title: `${this.result.nicovideo_video_response.video.title._text}`,
+      script: [
+        { src: 'https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js' }
+      ],
+      link:[
+        {rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons'}
+      ]
     };
   }
 }
@@ -143,6 +159,14 @@ export default {
 #card_list_area{
   scroll-behavior: smooth;
 }
-
+.fullscreen{
+  background-color: #f0f0f0aa;
+  height: 40px;
+  width: 40px;
+  z-index: 5;
+  position: absolute;
+  right: 0px;
+  bottom: -40px;
+}
 
 </style>
