@@ -38,6 +38,7 @@ export default {
   },
   head(){
     return {
+      title: 'Nicoview (仮)'
     };
   }
 }

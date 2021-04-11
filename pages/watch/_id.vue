@@ -12,10 +12,10 @@
       <p v-html='(result.nicovideo_video_response.video.description._text+"").replace(/(watch\/\d+)/g, `<a href="/$1">$1</a>`).replace(/(s[mo]\d+)/g, `<a href="/watch/$1">$1</a>`).replace(/\n/g,"<br>").replace(/(((http:\/\/)|(https:\/\/))[\w\.\/%\+#=\?\-@\(\)\$&]+)+/g, "<a href=\"$1\">$1</a>").replace(/(mylist\/\d+)/g, `<a href="https://www.nicovideo.jp/$1">$1</a>`)' style=""></p>
       <!-- <p>{{result}}</p> -->
       <!-- <p>{{URL_search_result}}</p> -->
-      <div class="pt-5 pb-5" >
+      <div class="pt-5 pb-4" >
         <h4>『{{search_word}}』の検索結果</h4>
         <!-- 検索結果 表示欄 -->
-        <div class="border border-dark rounded mb-3" style="height:70vh;overflow:auto;overflow-y: scroll;" ref="card_list_area" id="card_list_area">
+        <div class="border border-dark rounded" style="height:70vh;overflow:auto;overflow-y: scroll;" ref="card_list_area" id="card_list_area">
           <!-- カード -->
           <div class="border m-2" v-for="item in URL_search_result.data" :style="(item.contentId==url)?'background-color:#dcdcdc':''" :ref="(item.contentId==url)?'current_url_card':''">
             <div class="d-flex">
@@ -47,6 +47,7 @@
             <!-- <p>{{item}}</p> -->
           </div>
         </div>
+        <p class="text-right mt-0">※検索結果は『<a href="https://site.nicovideo.jp/search-api-docs/snapshot">ニコニコ動画 スナップショット検索API v2</a>』の仕様により、毎日AM5:00に更新されます。</p>
       </div>
     </div>
   </div>
@@ -111,13 +112,6 @@ export default {
   },
   mounted: function () {
     this.$nextTick(() => {
-      // this.$refs.card_list_area.scrollIntoView();
-      // this.$refs.current_url_card[0].scrollIntoView();
-      // this.$refs.current_url_card[0].scrollTop = 100;
-      // this.$refs.current_url_card[0].inview(function(){
-      //   this.$refs.current_url_card[0].scrollIntoView();
-      // });
-
       const options = {
         root: null,
         rootMargin: "0px",

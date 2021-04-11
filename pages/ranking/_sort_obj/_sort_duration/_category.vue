@@ -5,7 +5,7 @@
       <h1>Nicoview</h1>
       <p v-if="false">
         <span v-for="item in sort_obj_arr"><span v-if="item.key==sort_obj">{{item.jp}}</span><a :href="'/ranking/' + item.key + '/' + sort_duration + '/' + category" v-else>{{item.jp}}</a> / </span>
-      </p>
+      </p v-if="false">
       <p>{{query_text}}</p>
       <p>
         <span v-for="item in sort_duration_arr"><span v-if="item.key==sort_duration">{{item.jp}}</span><a :href="'/ranking/' + sort_obj + '/' + item.key + '/' + category + query_text" v-else>{{item.jp}}</a> / </span>
@@ -113,6 +113,7 @@ export default {
   },
   head(){
     return {
+      title: 'Nicoview (仮)'
     };
   }
 }
