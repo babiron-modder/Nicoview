@@ -92,7 +92,7 @@ export default {
       let search_word=document.getElementById("serach_box").value;
       if(search_word.match(/^\s*$/g))return;
       let search_mode=document.getElementById("search_mode").value;
-      window.location.href="/search/"+encodeURI(document.getElementById("serach_box").value)+"&_offset=0"+search_mode;
+      window.location.href="/search/"+encodeURIComponent(document.getElementById("serach_box").value)+"&_offset=0"+search_mode;
     }
   }
 }

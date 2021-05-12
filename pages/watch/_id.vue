@@ -87,6 +87,78 @@ export default {
     let result = xmljson.xml2js(search_result, {compact: true, spaces: 4});
     let len = result.nicovideo_video_response.tags.tag_info.length>2;
 
+    console.log(result.nicovideo_video_response.tags.tag_info);
+// result = {
+//   _declaration: { _attributes: { version: '1.0', encoding: 'UTF-8' } },
+//   nicovideo_video_response: {
+//     _attributes: { status: 'ok' },
+//     video: {
+//       id: { _text: 'sm36542104' },
+//       user_id: { _text: '50602552' },
+//       deleted: { _text: '0' },
+//       title: { _text: '【クトゥルフ神話TRPG】DAY3 #FINAL' },
+//       description: {
+//         _text: '「叶いそうにない、いい夢だ」\n' +
+//           '\n' +
+//           '\n' +
+//           'モザビ縛りでドン勝出来たら次に着手しよう\n' +
+//           '\n' +
+//           '\n' +
+//           'DAY3 part0：sm35273108\n' +
+//           'sm36358738 ← 前 / 次 → 3,000,000,000,000,000年後\n' +
+//           '\n' +
+//           'CoC動画まとめ→mylist/62438137\n' +
+//           'twitter：https://twitter.com/yodosumiori\n' +
+//           'pixiv：https://www.pixiv.net/member.php?id=15070076'
+//       },
+//       length_in_seconds: { _text: '723' },
+//       thumbnail_url: {
+//         _text: 'http://nicovideo.cdn.nimg.jp/thumbnails/36542104/36542104.73351713'
+//       },
+//       upload_time: { _text: '2020-03-21T01:10:39+09:00' },
+//       first_retrieve: { _text: '2020-03-20T16:22:02+09:00' },
+//       default_thread: { _text: '1584688922' },
+//       view_counter: { _text: '86954' },
+//       mylist_counter: { _text: '691' },
+//       genre: { key: [Object], label: [Object] },
+//       option_flag_community: { _text: '0' },
+//       option_flag_nicowari: { _text: '0' },
+//       option_flag_middle_thumbnail: { _text: '1' },
+//       option_flag_dmc_play: { _text: '1' },
+//       community_id: {},
+//       vita_playable: { _text: 'OK' },
+//       ppv_video: { _text: '0' },
+//       permission: {},
+//       provider_type: { _text: 'regular' },
+//       options: { _attributes: [Object] }
+//     },
+//     thread: {
+//       id: { _text: '1584688922' },
+//       num_res: { _text: '439' },
+//       summary: {
+//         _text: 'エロかっこいい 初期値が成功するのは当たり前だろ?(鍵開けトカゲ感) これはァ?!! リアルEDUよwww はよドン勝せい これ、後でクリティカル出されたら敵わんな 続きまだー? ここでエタるのかぁ 十文字ちゃんほんとめちゃくちゃにしたい 2021年...'
+//       },
+//       community_id: {},
+//       group_type: { _text: 'default' }
+//     },
+//     tags: {
+//   	  tag_info: [
+//   	    { tag: { _text: 'クトゥルフ神話TRPG' }, area: { _text: 'jp' } },
+//   	    { tag: { _text: '高速卓リンク' }, area: { _text: 'jp' } },
+//   	    { tag: { _text: 'trpg' }, area: { _text: 'jp' } },
+//   	    { tag: { _text: 'ゆっくりTRPG' }, area: { _text: 'jp' } },
+//   	    { tag: { _text: '品口凸凹（KP）' }, area: { _text: 'jp' } },
+//   	    { tag: { _text: 'オリジナル卓リンク' }, area: { _text: 'jp' } },
+//   	    { tag: { _text: 'TRPGリプレイ' }, area: { _text: 'jp' } },
+//   	    { tag: { _text: 'DAY3' }, area: { _text: 'jp' } },
+//   	    { tag: { _text: '次→sm38374392' }, area: { _text: 'jp' } },
+//   	    { tag: { _text: 'フラグ乱立' }, area: { _text: 'jp' } }
+//   	  ]
+//   	}
+//   }
+// }
+
+
     let search_word = result.nicovideo_video_response.video.title._text;
     search_word = search_word
       .replace(/\s+/g,' ')
@@ -107,9 +179,9 @@ export default {
       .replace(/\s+\-*\s*/gi," ")
       .replace(/\s*chapter[\d１２３４５６７８９０]+\s*/gi," chapter ")
       .replace(/\s+[\d１２３４５６７８９０]+\s+/gi," ")
+      .replace(/\s*#FINAL\s*/g," ")
 
-    const { data: URL_search_result } = await axios.get("https://api.search.nicovideo.jp/api/v2/snapshot/video/contents/search?q="+encodeURI(search_word)+"&targets=title&_sort=-startTime&_context=hoge&&fields=contentId,title,description,viewCounter,commentCounter,mylistCounter,startTime,thumbnailUrl,lengthSeconds&_limit=100");
-
+    const { data: URL_search_result } = await axios.get("https://api.search.nicovideo.jp/api/v2/snapshot/video/contents/search?q="+encodeURIComponent(search_word)+"&targets=title&_sort=-startTime&_context=hoge&&fields=contentId,title,description,viewCounter,commentCounter,mylistCounter,startTime,thumbnailUrl,lengthSeconds&_limit=100");
 
     return {
       search_result,
