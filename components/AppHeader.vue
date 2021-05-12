@@ -15,6 +15,7 @@
           </div>
           <div class="bg-light mb-3 p-3">
             <p class="font-weight-bold">更新履歴</p>
+            <p>2021/05/12　検索時のエスケープを修正</p>
             <p>2021/04/11　とりあえず完成</p>
             <hr class="mb-1">
             <span><a href="https://github.com/babiron-modder/nicoview">https://github.com/babiron-modder/nicoview</a></span>
