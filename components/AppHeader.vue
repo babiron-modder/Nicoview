@@ -15,6 +15,7 @@
           </div>
           <div class="bg-light mb-3 p-3">
             <p class="font-weight-bold">更新履歴</p>
+            <p>2021/05/13　検索URLのクエリの仕様を変更</p>
             <p>2021/05/12　検索時のエスケープを修正</p>
             <p>2021/04/11　とりあえず完成</p>
             <hr class="mb-1">
@@ -34,8 +35,8 @@
         <!-- 検索ボックス -->
         <div class="input-group mt-3 mb-1" v-show="opened">
           <select class="px-2" name="" id="search_mode">
-            <option value="">検索</option>
-            <option value="&targets=tagsExact">tag検索</option>
+            <option value="?targets=title,description,tags">検索</option>
+            <option value="?targets=tagsExact">tag検索</option>
           </select>
 
           <input type="text" class="form-control" placeholder="serach:" aria-label="sss" aria-describedby="basic-addon2" id="serach_box" @keydown.enter="entered">
@@ -93,7 +94,7 @@ export default {
       let search_word=document.getElementById("serach_box").value;
       if(search_word.match(/^\s*$/g))return;
       let search_mode=document.getElementById("search_mode").value;
-      window.location.href="/search/"+encodeURIComponent(document.getElementById("serach_box").value)+"&_offset=0"+search_mode;
+      window.location.href="/search/"+encodeURIComponent(document.getElementById("serach_box").value)+search_mode+"&_offset=0";
     }
   }
 }

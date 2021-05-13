@@ -5,8 +5,8 @@
       <h1>Nicoview</h1>
       <p>{{(target=="")?"tag検索":"検索"}}:「{{search_word}}」  page: {{offset*1}}~{{offset*1+100}}</p>
       <p class='mb-4'>
-        <a :class='(offset*1!=0)?"btn btn-primary btn-sm":"btn btn-primary btn-sm disabled"' :href="'/search/'+url+'&_offset='+((offset*1<100)?0:(offset*1-100))">&lt;&lt;</a>
-        <a class='btn btn-primary btn-sm ml-3' :href="'/search/'+url+'&_offset='+((offset*1>1500)?1600:(offset*1+100))" v-if="offset*1!=1600">&gt;&gt;</a>
+        <a :class='(offset*1!=0)?"btn btn-primary btn-sm":"btn btn-primary btn-sm disabled"' :href="'/search/'+url+'?targets='+$route.query.targets+'&_offset='+((offset*1<100)?0:(offset*1-100))">&lt;&lt;</a>
+        <a class='btn btn-primary btn-sm ml-3' :href="'/search/'+url+'?targets='+$route.query.targets+'&_offset='+((offset*1>1500)?1600:(offset*1+100))" v-if="offset*1!=1600">&gt;&gt;</a>
       </p>
       <ul v-for="item in search_result.data" class="p-0" style="list-style-type: none">
         <li class="">
@@ -39,8 +39,8 @@
         <li>{{item}}</li>
       </ul> -->
       <p class='mb-4'>
-        <a :class='(offset*1!=0)?"btn btn-primary btn-sm":"btn btn-primary btn-sm disabled"' :href="'/search/'+url+'&_offset='+((offset*1<100)?0:(offset*1-100))">&lt;&lt;</a>
-        <a class='btn btn-primary btn-sm ml-3' :href="'/search/'+url+'&_offset='+((offset*1>1500)?1600:(offset*1+100))" v-if="offset*1!=1600">&gt;&gt;</a>
+        <a :class='(offset*1!=0)?"btn btn-primary btn-sm":"btn btn-primary btn-sm disabled"' :href="'/search/'+url+'?targets='+$route.query.targets+'&_offset='+((offset*1<100)?0:(offset*1-100))">&lt;&lt;</a>
+        <a class='btn btn-primary btn-sm ml-3' :href="'/search/'+url+'?targets='+$route.query.targets+'&_offset='+((offset*1>1500)?1600:(offset*1+100))" v-if="offset*1!=1600">&gt;&gt;</a>
       </p>
     </section>
   </div>
@@ -62,25 +62,14 @@ export default {
   validate({params}) {
     return true;
   },
-  async asyncData ({ params }) {
-    let target="";
-    if(params.word.match(/&targets=([^&]+)/g)){
-      if(params.word.match(/&targets=([^&]+)/g)[0]!="&targets=tagsExact"){
-        target="&targets=title,description,tags";
-      }
-    }else{
-      target="&targets=title,description,tags";
-    }
+  async asyncData ({ params, query }) {
+    let target="&targets="+query.targets;
 
     let word = encodeURIComponent(params.word.split('&')[0]);
     let word_before_encode = params.word.split('&')[0]
 
-    let offset;
-    if(params.word.match(/&_offset=(\d+)/g)){
-      offset=params.word.match(/&_offset=(\d+)/g)[0].split('=')[1];
-    }else{
-      offset=0;
-    }
+    let offset = query._offset;
+    console.log(offset);
 
     //const { data: search_result } = await axios.get(`https://api.search.nicovideo.jp/api/v2/video/contents/search?q=${word}${target}&_sort=-startTime&_context=hoge&&fields=contentId,title,description,viewCounter,commentCounter,mylistCounter,startTime,thumbnailUrl,lengthSeconds&_limit=100`);
     const { data: search_result } = await axios.get(`https://api.search.nicovideo.jp/api/v2/snapshot/video/contents/search?q=${word}&_offset=${offset*1}${target}&_sort=-startTime&_context=hoge&&fields=contentId,title,description,viewCounter,commentCounter,mylistCounter,startTime,thumbnailUrl,lengthSeconds&_limit=100`);
@@ -96,7 +85,7 @@ export default {
   },
   head(){
     return {
-      title: `${this.url.split('&')[0]}`
+      title: `${decodeURIComponent(this.url.split('&')[0])}`
     };
   }
 }

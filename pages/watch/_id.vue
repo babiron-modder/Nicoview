@@ -11,7 +11,7 @@
       <p v-html='result.nicovideo_video_response.video.first_retrieve._text.split("+")[0].replace(/-/g,"/").replace(/T/g," ")+" 投稿"'></p>
       <p v-html='"再生数: "+result.nicovideo_video_response.video.view_counter._text+" コメント数: "+result.nicovideo_video_response.thread.num_res._text+" マイリスト数: "+result.nicovideo_video_response.video.mylist_counter._text'></p>
       <p style="overflow: auto;">元動画URL: <a style="overflow-wrap: normal;" :href='"https://www.nicovideo.jp/watch/"+this.url'>{{"https://www.nicovideo.jp/watch/"+this.url}}</a></p>
-      <p v-if="len"><a v-for="tag in result.nicovideo_video_response.tags.tag_info" class="btn btn-info m-1" :href="'/search/'+encodeURI(tag.tag._text)+'&targets=tagsExact'">{{tag.tag._text}}</a></p>
+      <p v-if="len"><a v-for="tag in result.nicovideo_video_response.tags.tag_info" class="btn btn-info m-1" :href="'/search/'+encodeURIComponent(tag.tag._text)+'?targets=tagsExact&_offset=0'">{{tag.tag._text}}</a></p>
       <div style="overflow:auto;" v-html='(result.nicovideo_video_response.video.description._text+"").replace(/(watch\/\d+)/g, `<a href="/$1">$1</a>`).replace(/(s[mo]\d+)/g, `<a href="/watch/$1">$1</a>`).replace(/\n/g,"<br>").replace(/(((http:\/\/)|(https:\/\/))[\w\.\/%\+#=\?\-@\(\)\$&]+)+/g, "<a href=\"$1\">$1</a>").replace(/(mylist\/\d+)/g, `<a href="https://www.nicovideo.jp/$1">$1</a>`)'></div>
       <!-- <p>{{result}}</p> -->
       <!-- <p>{{URL_search_result}}</p> -->
