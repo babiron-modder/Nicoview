@@ -78,7 +78,8 @@ export default {
       const search_result = axios.get('/api/nicoapi/v1/video.info?v=' + this.item.guid._text.split('watch/')[1])
       .then( search_result => {
         // this.description = xmljson.xml2js(search_result.data, {compact: true, spaces: 4});
-        let description = xmljson.xml2js(search_result.data, {compact: true, spaces: 4}).nicovideo_video_response.video.description._text;
+        // let description = xmljson.xml2js(search_result.data, {compact: true, spaces: 4}).nicovideo_video_response.video.description._text;
+        let description = search_result.data.niconico_response.video.description;
 
         if(description==undefined){
           this.description='';

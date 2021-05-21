@@ -7,12 +7,12 @@
       </button>
     </div>
     <div class="container" style="padding-top:105vh;min-height:200vh">
-      <h3 v-html='result.nicovideo_video_response.video.title._text'></h3>
-      <p v-html='result.nicovideo_video_response.video.first_retrieve._text.split("+")[0].replace(/-/g,"/").replace(/T/g," ")+" 投稿"'></p>
-      <p v-html='"再生数: "+result.nicovideo_video_response.video.view_counter._text+" コメント数: "+result.nicovideo_video_response.thread.num_res._text+" マイリスト数: "+result.nicovideo_video_response.video.mylist_counter._text'></p>
+      <h3 v-html='result.niconico_response.video.title'></h3>
+      <p v-html='result.niconico_response.video.first_retrieve.split("+")[0].replace(/-/g,"/").replace(/T/g," ")+" 投稿"'></p>
+      <p v-html='"再生数: "+result.niconico_response.video.view_counter+" コメント数: "+result.niconico_response.thread.num_res+" マイリスト数: "+result.niconico_response.video.mylist_counter'></p>
       <p style="overflow: auto;">元動画URL: <a style="overflow-wrap: normal;" :href='"https://www.nicovideo.jp/watch/"+this.url'>{{"https://www.nicovideo.jp/watch/"+this.url}}</a></p>
-      <p v-if="len"><a v-for="tag in result.nicovideo_video_response.tags.tag_info" class="btn btn-info m-1" :href="'/search/'+encodeURIComponent(tag.tag._text)+'?targets=tagsExact&_offset=0'">{{tag.tag._text}}</a></p>
-      <div style="overflow:auto;" v-html='(result.nicovideo_video_response.video.description._text+"").replace(/(watch\/\d+)/g, `<a href="/$1">$1</a>`).replace(/(s[mo]\d+)/g, `<a href="/watch/$1">$1</a>`).replace(/\n/g,"<br>").replace(/(((http:\/\/)|(https:\/\/))[\w\.\/%\+#=\?\-@\(\)\$&]+)+/g, "<a href=\"$1\">$1</a>").replace(/(mylist\/\d+)/g, `<a href="https://www.nicovideo.jp/$1">$1</a>`)'></div>
+      <p v-if="len"><a v-for="tag in result.niconico_response.tags.tag_info" class="btn btn-info m-1" :href="'/search/'+encodeURIComponent(tag.tag)+'?targets=tagsExact&_offset=0'">{{tag.tag}}</a></p>
+      <div style="overflow:auto;" v-html='(result.niconico_response.video.description+"").replace(/(watch\/\d+)/g, `<a href="/$1">$1</a>`).replace(/(s[mo]\d+)/g, `<a href="/watch/$1">$1</a>`).replace(/\n/g,"<br>").replace(/(((http:\/\/)|(https:\/\/))[\w\.\/%\+#=\?\-@\(\)\$&]+)+/g, "<a href=\"$1\">$1</a>").replace(/(mylist\/\d+)/g, `<a href="https://www.nicovideo.jp/$1">$1</a>`)'></div>
       <!-- <p>{{result}}</p> -->
       <!-- <p>{{URL_search_result}}</p> -->
       <div class="pt-5 pb-4" >
@@ -84,10 +84,12 @@ export default {
     let id = encodeURI(params.id);
 
     const { data: search_result } = await axios.get(`http://api.ce.nicovideo.jp/nicoapi/v1/video.info?v=${id}`);
-    let result = xmljson.xml2js(search_result, {compact: true, spaces: 4});
-    let len = result.nicovideo_video_response.tags.tag_info.length>2;
+    // let result = xmljson.xml2js(search_result, {compact: true, spaces: 4});
+    let result = search_result;
+    console.log(result);
+    let len = result.niconico_response.tags.tag_info.length>2;
 
-    let search_word = result.nicovideo_video_response.video.title._text;
+    let search_word = result.niconico_response.video.title;
     search_word = search_word
       .replace(/\s+/g,' ')
       .replace(/[⓪①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳㉑㉒㉓㉔㉕㉖㉗㉘㉙㉚㉛㉜㉝㉞㉟㊱㊲㊳㊴㊵㊶㊷㊸㊹㊺㊻㊼㊽㊾㊿]/g, " ")
@@ -140,7 +142,7 @@ export default {
   },
   head(){
     return {
-      title: `${this.result.nicovideo_video_response.video.title._text}`,
+      title: `${this.result.niconico_response.video.title}`,
       script: [
         { src: 'https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js' }
       ],
